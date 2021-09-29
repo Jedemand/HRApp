@@ -1,0 +1,11 @@
+.hidden{
+    visibility: hidden;
+}
+
+.visible{
+    visibility: visible;
+}
+
+#title{
+    font-size: large;
+}
