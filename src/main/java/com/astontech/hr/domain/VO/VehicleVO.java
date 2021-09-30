@@ -9,12 +9,12 @@ import java.util.List;
 public class VehicleVO {
 
     //vehicle params
-    private int newYear;
+    private String newYear;
     private String newLicensePlate;
     private String newVIN;
     private String newColor;
     private boolean newIsPurchased;
-    private int newPurchasePrice;
+    private String newPurchasePrice;
 
 
     //model params
@@ -34,7 +34,7 @@ public class VehicleVO {
 
     //region Methods
     public Vehicle hydrateVehicle() {
-      Vehicle hydratedVehicle = new Vehicle(this.newYear, this.newLicensePlate, this.newVIN, this.newColor, this.newIsPurchased, this.newPurchasePrice);
+      Vehicle hydratedVehicle = new Vehicle(Integer.parseInt(this.newYear), this.newLicensePlate, this.newVIN, this.newColor, this.newIsPurchased, Integer.parseInt(this.newPurchasePrice));
       return hydratedVehicle;
      }
 
@@ -44,11 +44,12 @@ public class VehicleVO {
 
     //region
 
-    public int getNewYear() {
+
+    public String getNewYear() {
         return newYear;
     }
 
-    public void setNewYear(int newYear) {
+    public void setNewYear(String newYear) {
         this.newYear = newYear;
     }
 
@@ -84,14 +85,14 @@ public class VehicleVO {
         this.newIsPurchased = newIsPurchased;
     }
 
-    public int getNewPurchasePrice() {
+
+    public String getNewPurchasePrice() {
         return newPurchasePrice;
     }
 
-    public void setNewPurchasePrice(int newPurchasePrice) {
+    public void setNewPurchasePrice(String newPurchasePrice) {
         this.newPurchasePrice = newPurchasePrice;
     }
-
 
     public String getNewVehicleModelName() {
         return newVehicleModelName;

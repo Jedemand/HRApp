@@ -1,7 +1,6 @@
 package com.astontech.hr.controllers;
 
 import com.astontech.hr.domain.*;
-import com.astontech.hr.domain.VO.ElementVO;
 import com.astontech.hr.domain.VO.VehicleVO;
 import com.astontech.hr.services.VehicleMakeService;
 import com.astontech.hr.services.VehicleModelService;
@@ -11,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,14 +48,21 @@ public class VehicleController {
 
 
         boolean success = true;
+        boolean notInt = false;
 
+        if(isStringInt(vehicleVO.getNewYear()) && isStringInt(vehicleVO.getNewPurchasePrice())){
+            success = true;
+        }else{
+            success = false;
+            notInt = true;
+        }
         if(vehicleVO.getNewVehicleMakeName().isEmpty()){
             success = false;
         }
         if(vehicleVO.getNewVehicleModelName().isEmpty()){
             success = false;
         }
-        if(vehicleVO.getNewYear() == 0){
+        if(vehicleVO.getNewYear().isEmpty()){
             success = false;
         }
         if(vehicleVO.getNewLicensePlate().isEmpty()){
@@ -71,8 +74,13 @@ public class VehicleController {
         if(vehicleVO.getNewColor().isEmpty()){
             success = false;
         }
-        if(vehicleVO.getNewPurchasePrice() == 0){
+        if(vehicleVO.getNewPurchasePrice().isEmpty()){
             success = false;
+       }
+
+
+        if(notInt){
+            model.addAttribute("dangerAlert", "visible");
         }
 
 
@@ -185,19 +193,30 @@ public class VehicleController {
     }
 
     @RequestMapping(value="/admin/vehicle/update/model", method = RequestMethod.POST)
-    public String modelUpdate(VehicleModel vehicleModel) {
+    public String modelUpdate(VehicleModel vehicleModel,
+                              @RequestParam("inputYear") String newYear,
+                              @RequestParam("inputPlate") String newPlate,
+                              @RequestParam("inputVIN") String newVIN,
+                              @RequestParam("inputColor") String newColor,
+                              @RequestParam("inputPrice") String newPrice,
+                              Model model) {
 
-        System.out.println("Vehicle Make: " + vehicleModel.toString());
+        Boolean success = true;
 
-//        if(!newVehicle.equals("")){
-//            if(vehicleModel.getVehicleList() == null){
-//                List<Vehicle> vehicleList = new ArrayList<Vehicle>();
-//                vehicleList.add(newVehicle);
-//                vehicleModel.setVehicleList(vehicleList);
-//            }else {
-//               vehicleModel.getVehicleList().add(newVehicle);
-//            }
-//        }
+        if (isStringInt(newYear) && isStringInt(newPrice)) {
+            if (!newPlate.equals("")) {
+                if (vehicleModel.getVehicleList() == null) {
+                    List<Vehicle> vehicleList = new ArrayList<Vehicle>();
+
+                    vehicleList.add(new Vehicle(Integer.parseInt(newYear), newPlate, newVIN, newColor, Integer.parseInt(newPrice)));
+                    vehicleModel.setVehicleList(vehicleList);
+                } else {
+                    vehicleModel.getVehicleList().add(new Vehicle(Integer.parseInt(newYear), newPlate, newVIN, newColor, Integer.parseInt(newPrice)));
+                }
+            }
+        }else{
+            success = false;
+        }
 
         if(vehicleModel.getVehicleList() != null ) {
             for (int i = 0; i < vehicleModel.getVehicleList().size(); i++) {
@@ -210,6 +229,11 @@ public class VehicleController {
 
 
         vehicleModelService.saveVehicleModel(vehicleModel);
+
+        if(success) {
+            model.addAttribute("successAlert", "visible");
+        }else
+            model.addAttribute("warningAlert", "visible");
 
         if(vehicleModel.getId() != null) {
             return "redirect:/admin/vehicle/edit/model/" + vehicleModel.getId();
@@ -392,4 +416,12 @@ public class VehicleController {
         return vehicleVO.hydrateVehicle();
     }
 
+    public Boolean isStringInt(String string){
+        try{
+            int x = Integer.parseInt(string);
+            return true;
+        } catch(NumberFormatException e){
+            return false;
+        }
+    }
 }

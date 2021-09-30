@@ -33,11 +33,11 @@
                             <div class="form-group">
                                 <div class="col-lg-10">
                                     <label for="inputVehicle" id="title" class="d-flex justify-content-center">Vehicle Information</label>
-                                    <form:input path="newYear" type="int" class="form-control" id="inputVehicle" placeholder="1886" required="required"/>
-                                    <form:input path="newLicensePlate" type="text" class="form-control" id="inputModel" placeholder="License Plate" required="required"/>
-                                    <form:input path="newVIN" type="text" class="form-control" id="inputModel" placeholder="VIN#" required="required"/>
-                                    <form:input path="newColor" type="text" class="form-control" id="inputModel" placeholder="Color" required="required"/>
-                                    <form:input path="newPurchasePrice" type="int" class="form-control" id="inputModel" placeholder="5000" required="required"/>
+                                    <form:input path="newYear" type="int" class="form-control" id="inputVehicle" placeholder="Year"/>
+                                    <form:input path="newLicensePlate" type="text" class="form-control" id="inputModel" placeholder="License Plate"/>
+                                    <form:input path="newVIN" type="text" class="form-control" id="inputModel" placeholder="VIN#"/>
+                                    <form:input path="newColor" type="text" class="form-control" id="inputModel" placeholder="Color"/>
+                                    <form:input path="newPurchasePrice" type="int" class="form-control" id="inputModel" placeholder="Price"/>
                                 </div>
                             </div>
                             <div class="formgroup">
@@ -61,13 +61,13 @@
                         <div class="alert alert-dismissible alert-warning">
                             <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button>
                             <h4>Warning!</h4>
-                            <p class="mb-0">Warning! All fields must be filled. please enter a Make, Model, and all Vehicle parameters <a href="#" class="alert-link">vel scelerisque nisl consectetur et</a>.</p>
+                            <p class="mb-0">Warning! All fields must be filled. please enter a Make, Model, and all Vehicle parameters.  <a href="#" class="alert-link"></a>.</p>
                         </div>
                     </div>
                     <div class="${dangerAlert == null ? 'hidden' : dangerAlert}" id="dangerAlert">
                         <div class="alert alert-dismissible alert-danger">
                             <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button>
-                            <strong>Oh snap!</strong> <a href="#" class="alert-link">Change a few things up and try submitting again.</a>
+                            <strong>Oh snap!</strong> <a href="#" class="alert-link">Year and Price must be whole numbers without symbols.</a>
                         </div>
                     </div>
                 </div>

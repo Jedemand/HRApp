@@ -28,6 +28,14 @@ public class Vehicle {
     public Vehicle() {
     }
 
+    public Vehicle(int year, String licensePlate, String VIN, String color, int purchasePrice) {
+        Year = year;
+        LicensePlate = licensePlate;
+        this.VIN = VIN;
+        Color = color;
+        PurchasePrice = purchasePrice;
+    }
+
     public Vehicle(int year, String licensePlate, String VIN, String color, boolean purchased, int purchasePrice) {
         Year = year;
         LicensePlate = licensePlate;
